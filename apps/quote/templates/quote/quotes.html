@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'log/css/style.css' %}"> 
+  <script src="{% static 'log/js/script.js' %}"></script>
+
+  <title>Favorite Quotes | Main</title>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expanded-lg bg-dark">
+      <a class="navbar-brand text-success" href="/logout">Favorite Quotes</a>
+      <a href="/logout" class="btn btn-outline-success text-success bg-dark">Log Out</a>
+    </nav>
+  </header>
+  <div class="container">
+    <h1>Welcome, {{user.name}}</h1>
+    <div class="row mt-5">
+      <div class="col-6">
+        <h2>Quatable Quotes</h2>
+        <hr class="may-1 bg-success">
+        <div class="row">
+          <div class="col-12">
+            {% for nf in not_favs %}
+              <div class="jumbotron">
+                <div class="row">
+                  {{nf.quote}}: {{nf.message}}
+                </div>
+                <div class="row mt-5">
+                  <div class="co-6">
+                    <p>Posted by: <a href="/users/{{nf.creator.id}}">{{nf.creator.name}}</a></p>
+                  </div>
+                  <div class="col-6">
+                    <a href="/add/{{nf.id}}" class="btn btn-outline-success text-success bg-dark">Add to my list</a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+      </div>
+  </div>
+      <div class="col-6">
+        <h2>Your Favorites</h2>
+        <hr class="may-1 bg-success">
+        <div class="row">
+          <div class="col-12">
+            {% for fav in favs %}
+              <div class="jumbotron">
+                <div class="row">
+                  {{fav.quote}}: {{fav.message}}
+                </div>
+                <div class="row mt-5">
+                  <div class="co-6">
+                      <p>Posted by: <a href="/users/{{fav.creator.id}}">{{fav.creator.name}}</a></p>
+                  </div>
+                  <div class="col-6">
+                    <form action="/remove/{{fav.id}}" method="POST">
+                      {% csrf_token %}
+                      <button type=submit class="btn btn-outline-success text-success bg-dark">Remove from my list</button>
+                  </form>
+                   
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col">
+            <h3>Contribute a Quote:</h3>
+            {% if messages %}
+              <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }} text-danger"{% endif %}>{{ message }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            <hr class="may-1 bg-success">
+            <form action="/create" method="POST">
+              {% csrf_token %}
+              <div class="form-group row">
+                <label for="quote" class="col-sm-3 col-form-label">Quote By:</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="quote" name="quote">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="message" class="col-sm-3 col-form-label">Message:</label>
+                <div class="col-sm-9">
+                  <textarea type="text" class="form-control" id="message" name="message"></textarea>
+                </div>
+              </div>
+              <button class="btn btn-outline-success text-success bg-dark">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'log/css/style.css' %}"> 
+  <script src="{% static 'log/js/script.js' %}"></script>
+
+  <title>Favorite Quotes | Main</title>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expanded-lg bg-dark">
+      <a class="navbar-brand text-success" href="/">Favorite Quotes</a>
+    </nav>
+  </header>
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-6">
+        <h2>Registration</h2>
+        <hr class="may-1 bg-success">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }} text-danger"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <form class="border p-4" action="/registor" method="POST">
+          {% csrf_token %}
+          <div class="form-group row">
+            <label for="name" class="col-form-label col-sm-3">Name:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="name" id="name" placeholder="Enter name">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="alias" class="col-form-label col-sm-3">Alias:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="alias" id="alias" placeholder="Enter alias">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="pw" class="col-sm-3 col-form-label">Password</label>
+            <div class="col-sm-9">
+              <input type="txt" class="form-control" name="pw" id="pw" placeholder="password">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="confirm" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="confirm" id="confirm" placeholder="Confirm password">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="dob" class="col-sm-3 col-form-label">Password</label>
+            <div class="col-sm-9">
+              <input type="date" class="form-control" name="dob" id="dob">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-outline-success bg-dark">Registor</button>
+        </form>
+      </div>
+      <div class="col-6">
+        <h2>Log In</h2>
+        <hr class="may-1 bg-success">
+        <form class="border p-4" action="/login" method="POST">
+          {% csrf_token %}
+          <div class="form-group row">
+            <label for="email" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" name="l_email" id="l_email" placeholder="Email">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="l_pw" class="col-sm-3 col-form-label">Password</label>
+            <div class="col-sm-9">
+              <input type="txt" class="form-control" name="l_pw" id="l_pw" placeholder="password">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-outline-success bg-dark">Log In</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+</body>
+</html>
